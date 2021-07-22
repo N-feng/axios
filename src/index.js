@@ -1,5 +1,5 @@
 // Import vue component
-import instance from './axios/interceptor'
+import request from './axios/request'
 
 const components = []
 
@@ -15,7 +15,7 @@ if (typeof window !== "undefined" && window.Vue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export default { install, instance }
+export default { install, request }
 
 // It's possible to expose named exports when writing components that can
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';

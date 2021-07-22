@@ -1,8 +1,8 @@
 {
-  "name": "axios",
-  "version": "1.0.0",
+  "name": "nfeng-axios",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production rollup -c",
