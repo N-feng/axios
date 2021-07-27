@@ -1,12 +1,34 @@
+
+import { Message } from "element-ui";
+
+// 请求中的api
+let pendingPool = new Map();
+
 export default (response) => {
-  // 根据与后端约定，统一由code，做出对应的提示与处理
-  const code = parseInt(response.data && response.data.code)
-  if (code === 401) {
+  const resp = response.data;
+
+  if (response.status != 200 || (resp.code && resp.code != 0)) {
+    if (pendingPool.has(401)) {
+      return
+    }
+    Message({
+      message: resp.data || resp.msg || "请求异常",
+      type: "error",
+    });
+  }
+
+  if (resp.code === 401) {
     // 清token
     localStorage.removeItem("token");
     // 也可使用router进行跳转
-    window.location.href = '/login';
+    // window.location.href = '/login';
+    pendingPool.set(res.code, JSON.stringify(res));
   }
+
+  if (resp.code === 0) {
+    pendingPool.delete(401);
+  }
+
   // 保证文件流输出完全
   if (response.config.responseType === "blob") {
     return response;

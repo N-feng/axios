@@ -1,8 +1,5 @@
-import { Loading, Message } from 'element-ui';
+import { Loading } from 'element-ui';
 import instance from './interceptor'
-
-// 请求中的api
-let pendingPool = new Map();
 
 export default (options, loading = true) => {
   let loadingInstance;
@@ -14,23 +11,9 @@ export default (options, loading = true) => {
     spinner: "el-icon-loading",
     background: "rgba(255, 255, 255, 0.8)"
   });
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     instance(options).then((res) => {
-      if (res.code === 0) {
-        pendingPool.delete(401)
-        resolve(res)
-      } else {
-        if (!pendingPool.has(401)) {
-          Message({
-            message: res.msg || '请求异常',
-            type: 'error',
-          })
-        }
-        if (res.code === 401) {
-          pendingPool.set(res.code, JSON.stringify(res));
-        }
-        reject(res)
-      }
+      resolve(res)
     }).finally(() => {
       loadingInstance.close();
     })
